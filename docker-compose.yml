@@ -1,0 +1,19 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: png-postgres
+
+    environment:
+      POSTGRES_DB: png
+      POSTGRES_USER: png_user
+      POSTGRES_PASSWORD: png_password
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - png-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  png-postgres-data:

@@ -1,0 +1,37 @@
+### Check that the server works
+GET http://localhost:8080/hello
+
+### Create a room
+POST http://localhost:8080/api/rooms
+Content-Type: application/json
+
+{
+  "numberOfPlayers": 4
+}
+
+### Get the room
+GET http://localhost:8080/api/rooms/RE9SX1
+
+### Join the room
+POST http://localhost:8080/api/rooms/join
+Content-Type: application/json
+
+{
+  "roomCode": "RE9SX1",
+  "name": "Alice"
+}
+
+### Get the room again
+GET http://localhost:8080/api/rooms/RE9SX1
+
+### Get room after Alice joined
+GET http://localhost:8080/api/rooms/RE9SX1
+
+### Invalid room code—should return 404 or 400
+POST http://localhost:8080/api/rooms/join
+Content-Type: application/json
+
+{
+  "roomCode": "XXXXXX",
+  "name": "Charlie"
+}
