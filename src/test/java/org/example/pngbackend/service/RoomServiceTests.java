@@ -52,3 +52,4 @@ class RoomServiceTests {
         assertEquals(expectedMessage, exception.getMessage());
         verifyNoInteractions(roomRepository, participantRepository);
     }
+}
