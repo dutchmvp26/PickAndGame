@@ -28,7 +28,7 @@ public class RoomService {
         this.participantRepository = participantRepository;
     }
 
-    publi Room createRoom(int numberOfPlayers) {
+    public Room createRoom(int numberOfPlayers) {
 
         if (numberOfPlayers < 2) {
             throw new IllegalArgumentException(
