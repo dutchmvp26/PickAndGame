@@ -10,25 +10,25 @@ Content-Type: application/json
 }
 
 ### Get the room
-GET http://localhost:8080/api/rooms/RE9SX1
+GET http://localhost:8080/api/rooms/WBGZWL
 
 ### Join the room
 POST http://localhost:8080/api/rooms/join
 Content-Type: application/json
 
 {
-  "roomCode": "RE9SX1",
+  "roomCode": "WBGZWL",
   "name": "Alice"
 }
 
 ### Get the room again
-GET http://localhost:8080/api/rooms/RE9SX1
+GET http://localhost:8080/api/rooms/WBGZWL
 
 ### Get room after Alice joined
-GET http://localhost:8080/api/rooms/RE9SX1
+GET http://localhost:8080/api/rooms/WBGZWL
 
 ### Invalid room code—should return 404 or 400
-POST http://localhost:8080/api/rooms/join
+    POST http://localhost:8080/api/rooms/join
 Content-Type: application/json
 
 {
