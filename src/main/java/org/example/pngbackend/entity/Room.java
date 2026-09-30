@@ -1,6 +1,7 @@
 package org.example.pngbackend.entity;
 
 import jakarta.persistence.*;
+import org.jspecify.annotations.NonNull;
 
 import java.time.LocalDateTime;
 
