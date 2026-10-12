@@ -8,6 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -36,20 +39,24 @@ class RoomServiceTests {
 
     @Test
     void createRoom_shouldRejectFewerThanTwoPlayers() {
-        // Arrange: prepare an invalid number of players and the expected message.
+        // Arrange
         int invalidNumberOfPlayers = 1;
-        String expectedMessage = "A room must have at least 2 players";
+        String expectedMessage =
+                "400 BAD_REQUEST \"A room must have at least 2 players.\"";
 
-        // Act: call createRoom with the invalid value.
-        // assertThrows also verifies that the expected exception type is thrown.
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        // Act
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
                 () -> roomService.createRoom(invalidNumberOfPlayers)
         );
 
-        // Assert: verify the exception message and confirm that validation
-        // happened before either repository was accessed.
-        assertEquals(expectedMessage, exception.getMessage());
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals(
+                "A room must have at least 2 players.",
+                exception.getReason()
+        );
+
         verifyNoInteractions(roomRepository, participantRepository);
     }
 }
