@@ -1,6 +1,5 @@
-FROM gradle:9.7.1-jdk17 AS build
-COPY . .
-RUN gradle bootJar
-FROM eclipse-temurin:17-jre
-COPY --from=build /build/libs/*.jar /app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM eclipse-temurin:17-jre-jammy
+WORKDIR /app
+COPY build/libs/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

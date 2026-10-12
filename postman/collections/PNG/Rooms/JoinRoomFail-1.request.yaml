@@ -1,0 +1,15 @@
+$kind: http-request
+name: JoinRoomFail
+description: ""
+url: http://localhost:8080/api/rooms/XXXXX
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"roomCode\": \"WBGZWL\",\r
+
+    \  \"name\": \"Alice\"\r
+
+    }"
+order: 1000

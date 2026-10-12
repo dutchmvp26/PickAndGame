@@ -4,7 +4,9 @@ import org.example.pngbackend.entity.Participant;
 import org.example.pngbackend.entity.Room;
 import org.example.pngbackend.repository.ParticipantRepository;
 import org.example.pngbackend.repository.RoomRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -31,8 +33,8 @@ public class RoomService {
     public Room createRoom(int numberOfPlayers) {
 
         if (numberOfPlayers < 2) {
-            throw new IllegalArgumentException(
-                    "A room must have at least 2 players"
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "A room must have at least 2 players."
             );
         }
 
@@ -50,8 +52,8 @@ public class RoomService {
 
         return roomRepository.findByRoomCode(roomCode)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Room not found"
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND, "Room not found."
                         )
                 );
     }
@@ -63,8 +65,9 @@ public class RoomService {
 
         Room room = roomRepository.findByRoomCode(roomCode)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Room not found"
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Room not found."
                         )
                 );
 
@@ -72,8 +75,9 @@ public class RoomService {
                 participantRepository.findByRoomId(room.getId());
 
         if (participants.size() >= room.getNumberOfPlayers()) {
-            throw new IllegalStateException(
-                    "Room is full"
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Room is full."
             );
         }
 

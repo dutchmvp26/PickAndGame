@@ -1,0 +1,7 @@
+$kind: http-request
+url: http://localhost:8080/api/rooms
+method: POST
+body:
+  type: json
+  content: "{\r\n  \"numberOfPlayers\": 3\r\n}"
+order: 6000
