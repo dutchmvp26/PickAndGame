@@ -1,11 +1,17 @@
 package org.example.pngbackend.repository;
 
-import org.example.pngbackend.entity.Participant;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.example.pngbackend.domain.ParticipantDomain;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ParticipantRepository extends JpaRepository<Participant, Long> {
+public interface ParticipantRepository {
 
-    List<Participant> findByRoomId(Long roomId);
+    ParticipantDomain save(ParticipantDomain participant);
+
+    Optional<ParticipantDomain> findById(Long id);
+
+    List<ParticipantDomain> findByRoomId(Long roomId);
+
+    long countByRoomId(Long roomId);
 }

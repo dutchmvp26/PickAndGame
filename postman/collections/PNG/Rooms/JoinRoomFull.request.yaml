@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:8080/api/rooms/join
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"roomCode\": \"WBGZWL\",\r
+
+    \  \"name\": \"Testing\"\r
+
+    }"
+order: 2210

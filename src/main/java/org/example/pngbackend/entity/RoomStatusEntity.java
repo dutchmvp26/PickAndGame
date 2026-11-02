@@ -1,6 +1,6 @@
 package org.example.pngbackend.entity;
 
-public enum RoomStatus {
+public enum RoomStatusEntity {
     WAITING,
     VOTING,
     FINISHED

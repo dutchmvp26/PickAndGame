@@ -17,12 +17,8 @@ public class Participant {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    protected Participant() {
-    }
-
-    public Participant(String name, Room room) {
-        this.name = name;
-        this.room = room;
+   public Participant() {
+        // Required by JPA
     }
 
     public Long getId() {
@@ -35,5 +31,13 @@ public class Participant {
 
     public Room getRoom() {
         return room;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

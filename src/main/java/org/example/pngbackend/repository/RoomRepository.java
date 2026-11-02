@@ -1,13 +1,12 @@
 package org.example.pngbackend.repository;
 
-import org.example.pngbackend.entity.Room;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.example.pngbackend.domain.RoomDomain;
 
 import java.util.Optional;
 
-public interface RoomRepository extends JpaRepository<Room, Long> {
-
-    Optional<Room> findByRoomCode(String roomCode);
-
+public interface RoomRepository {
+    RoomDomain save(RoomDomain room);
+    Optional<RoomDomain> findByRoomCode(String roomCode);
     boolean existsByRoomCode(String roomCode);
+    Optional<RoomDomain> findByRoomCodeForUpdate(String roomCode);
 }

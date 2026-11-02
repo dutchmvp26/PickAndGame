@@ -1,8 +1,6 @@
 package org.example.pngbackend.entity;
 
 import jakarta.persistence.*;
-import org.jspecify.annotations.NonNull;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,19 +19,13 @@ public class Room {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private RoomStatus status;
+    private RoomStatusEntity status;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    protected Room() {
-    }
-
-    public Room(String roomCode, int numberOfPlayers) {
-        this.roomCode = roomCode;
-        this.numberOfPlayers = numberOfPlayers;
-        this.status = RoomStatus.WAITING;
-        this.createdAt = LocalDateTime.now();
+    public Room() {
+        // Required by JPA
     }
 
     public Long getId() {
@@ -44,19 +36,31 @@ public class Room {
         return roomCode;
     }
 
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
+
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
-    public RoomStatus getStatus() {
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public RoomStatusEntity getStatus() {
         return status;
     }
 
-    public void setStatus(RoomStatus status) {
+    public void setStatus(RoomStatusEntity status) {
         this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

@@ -3,7 +3,7 @@ package org.example.pngbackend.repository;
 import org.example.pngbackend.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VoteRepository extends JpaRepository<Vote, Long> {
+public interface JpaVoteRepository extends JpaRepository<Vote, Long> {
 // NOT IN USE RIGHT NOW :D
 //    boolean existsByParticipantIdAndGameIdAndRoomId(
 //            Long participantId,

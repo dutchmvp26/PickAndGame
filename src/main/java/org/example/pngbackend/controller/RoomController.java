@@ -1,9 +1,9 @@
 package org.example.pngbackend.controller;
 
+import org.example.pngbackend.domain.ParticipantDomain;
+import org.example.pngbackend.domain.RoomDomain;
 import org.example.pngbackend.dto.CreateRoomRequest;
 import org.example.pngbackend.dto.JoinRoomRequest;
-import org.example.pngbackend.entity.Participant;
-import org.example.pngbackend.entity.Room;
 import org.example.pngbackend.service.RoomService;
 
 import jakarta.validation.Valid;
@@ -22,10 +22,10 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Room> createRoom(
-            @Valid @RequestBody CreateRoomRequest request) {
-
-        Room room = roomService.createRoom(
+    public ResponseEntity<RoomDomain> createRoom(
+            @Valid @RequestBody CreateRoomRequest request
+    ) {
+        RoomDomain room = roomService.createRoom(
                 request.getNumberOfPlayers()
         );
 
@@ -33,23 +33,23 @@ public class RoomController {
     }
 
     @GetMapping("/{roomCode}")
-    public ResponseEntity<Room> getRoom(
-            @PathVariable String roomCode) {
+    public ResponseEntity<RoomDomain> getRoom(
+            @PathVariable String roomCode
+    ) {
+        RoomDomain room = roomService.getRoom(roomCode);
 
-        return ResponseEntity.ok(
-                roomService.getRoom(roomCode)
-        );
+        return ResponseEntity.ok(room);
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Participant> joinRoom(
-            @Valid @RequestBody JoinRoomRequest request) {
-
-        return ResponseEntity.ok(
-                roomService.joinRoom(
-                        request.getRoomCode(),
-                        request.getName()
-                )
+    public ResponseEntity<ParticipantDomain> joinRoom(
+            @Valid @RequestBody JoinRoomRequest request
+    ) {
+        ParticipantDomain participant = roomService.joinRoom(
+                request.getRoomCode(),
+                request.getName()
         );
+
+        return ResponseEntity.ok(participant);
     }
 }
