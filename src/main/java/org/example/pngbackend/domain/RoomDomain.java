@@ -6,6 +6,10 @@ public class RoomDomain {
 
     private final Long id;
     private final String roomCode;
+    private final String name;
+    private final String description;
+    private final ActivityType activityType;
+    private final RoomIcon icon;
     private final int numberOfPlayers;
     private RoomStatus status;
     private final LocalDateTime createdAt;
@@ -13,10 +17,32 @@ public class RoomDomain {
     public RoomDomain(
             Long id,
             String roomCode,
+            String name,
+            String description,
+            ActivityType activityType,
+            RoomIcon icon,
             int numberOfPlayers,
             RoomStatus status,
             LocalDateTime createdAt
     ) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(
+                    "A room must have a name."
+            );
+        }
+
+        if (activityType == null) {
+            throw new IllegalArgumentException(
+                    "A room must have an activity type."
+            );
+        }
+
+        if (icon == null) {
+            throw new IllegalArgumentException(
+                    "A room must have an icon."
+            );
+        }
+
         if (numberOfPlayers < 2) {
             throw new IllegalArgumentException(
                     "A room must have at least 2 players."
@@ -25,6 +51,10 @@ public class RoomDomain {
 
         this.id = id;
         this.roomCode = roomCode;
+        this.name = name.trim();
+        this.description = description == null ? "" : description.trim();
+        this.activityType = activityType;
+        this.icon = icon;
         this.numberOfPlayers = numberOfPlayers;
         this.status = status;
         this.createdAt = createdAt;
@@ -32,11 +62,19 @@ public class RoomDomain {
 
     public static RoomDomain create(
             String roomCode,
+            String name,
+            String description,
+            ActivityType activityType,
+            RoomIcon icon,
             int numberOfPlayers
     ) {
         return new RoomDomain(
                 null,
                 roomCode,
+                name,
+                description,
+                activityType,
+                icon,
                 numberOfPlayers,
                 RoomStatus.WAITING,
                 LocalDateTime.now()
@@ -73,6 +111,22 @@ public class RoomDomain {
 
     public String getRoomCode() {
         return roomCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ActivityType getActivityType() {
+        return activityType;
+    }
+
+    public RoomIcon getIcon() {
+        return icon;
     }
 
     public int getNumberOfPlayers() {

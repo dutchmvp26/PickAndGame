@@ -1,7 +1,9 @@
 package org.example.pngbackend.service;
 
+import org.example.pngbackend.domain.ActivityType;
 import org.example.pngbackend.domain.ParticipantDomain;
 import org.example.pngbackend.domain.RoomDomain;
+import org.example.pngbackend.domain.RoomIcon;
 import org.example.pngbackend.domain.RoomStatus;
 import org.example.pngbackend.repository.ParticipantRepository;
 import org.example.pngbackend.repository.RoomRepository;
@@ -32,7 +34,13 @@ public class RoomService {
         this.participantRepository = participantRepository;
     }
 
-    public RoomDomain createRoom(int numberOfPlayers) {
+    public RoomDomain createRoom(
+            String name,
+            String description,
+            ActivityType activityType,
+            RoomIcon icon,
+            int numberOfPlayers
+    ) {
         if (numberOfPlayers < 2) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -42,7 +50,14 @@ public class RoomService {
 
         String roomCode = generateUniqueRoomCode();
 
-        RoomDomain room = RoomDomain.create(roomCode, numberOfPlayers);
+        RoomDomain room = RoomDomain.create(
+                roomCode,
+                name,
+                description,
+                activityType,
+                icon,
+                numberOfPlayers
+        );
 
         return roomRepository.save(room);
     }

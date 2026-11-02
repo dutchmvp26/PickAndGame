@@ -1,8 +1,7 @@
 services:
 
-  postgres:
+  database:
     image: postgres:16
-    container_name: png-postgres
 
     environment:
       POSTGRES_DB: png
@@ -14,6 +13,24 @@ services:
 
     volumes:
       - png-postgres-data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d png" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/png
+      SPRING_DATASOURCE_USERNAME: png_user
+      SPRING_DATASOURCE_PASSWORD: png_password
+    depends_on:
+      - database
 
 volumes:
   png-postgres-data:

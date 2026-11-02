@@ -6,6 +6,10 @@ POST http://localhost:8080/api/rooms
 Content-Type: application/json
 
 {
+  "name": "Friday game night",
+  "description": "FIFA and Mario Kart",
+  "activityType": "VIDEO_GAMES",
+  "icon": "CONTROLLER",
   "numberOfPlayers": 4
 }
 

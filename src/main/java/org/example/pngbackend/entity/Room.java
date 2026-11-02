@@ -14,6 +14,20 @@ public class Room {
     @Column(nullable = false, unique = true, length = 6)
     private String roomCode;
 
+    @Column(nullable = false, length = 50)
+    private String name;
+
+    @Column(nullable = false, length = 300)
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ActivityTypeEntity activityType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoomIconEntity icon;
+
     @Column(nullable = false)
     private int numberOfPlayers;
 
@@ -38,6 +52,38 @@ public class Room {
 
     public void setRoomCode(String roomCode) {
         this.roomCode = roomCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ActivityTypeEntity getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(ActivityTypeEntity activityType) {
+        this.activityType = activityType;
+    }
+
+    public RoomIconEntity getIcon() {
+        return icon;
+    }
+
+    public void setIcon(RoomIconEntity icon) {
+        this.icon = icon;
     }
 
     public int getNumberOfPlayers() {

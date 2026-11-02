@@ -26,6 +26,10 @@ public class RoomController {
             @Valid @RequestBody CreateRoomRequest request
     ) {
         RoomDomain room = roomService.createRoom(
+                request.getName(),
+                request.getDescription(),
+                request.getActivityType(),
+                request.getIcon(),
                 request.getNumberOfPlayers()
         );
 

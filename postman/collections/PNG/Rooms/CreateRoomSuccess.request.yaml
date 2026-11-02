@@ -3,5 +3,5 @@ url: http://localhost:8080/api/rooms
 method: POST
 body:
   type: json
-  content: "{\r\n  \"numberOfPlayers\": 3\r\n}"
+  content: "{\r\n  \"name\": \"Friday game night\",\r\n  \"description\": \"FIFA and Mario Kart\",\r\n  \"activityType\": \"VIDEO_GAMES\",\r\n  \"icon\": \"CONTROLLER\",\r\n  \"numberOfPlayers\": 3\r\n}"
 order: 6000
