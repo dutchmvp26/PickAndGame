@@ -55,8 +55,7 @@ sonar {
     properties {
         property 'sonar.projectKey', 'png-backend'
         property 'sonar.projectName', 'PNG Backend'
-        property 'sonar.host.url', 'http://localhost:9000'
         property "sonar.branch.name" , "main"
-        property "sonar.host.url", 'https://sonarcloud.io/organizations/dutchmvp26/projects'
+        property "sonar.host.url", 'https://sonarcloud.io'
     }
 }
