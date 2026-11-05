@@ -18,7 +18,6 @@ public class Participant {
     private Room room;
 
    public Participant() {
-        // Required by JPA
     }
 
     public Long getId() {

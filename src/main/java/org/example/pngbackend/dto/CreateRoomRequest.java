@@ -24,7 +24,7 @@ public class CreateRoomRequest {
     private RoomIcon icon;
 
     @Min(value = 2, message = "A room must have at least 2 players")
-    @Max(value = 30, message = "A room can have at most 30 players")
+    @Max(value = 60, message = "A room can have at most 60 players")
     private int numberOfPlayers;
 
     public String getName() {

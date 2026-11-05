@@ -39,7 +39,6 @@ public class Room {
     private LocalDateTime createdAt;
 
     public Room() {
-        // Required by JPA
     }
 
     public Long getId() {

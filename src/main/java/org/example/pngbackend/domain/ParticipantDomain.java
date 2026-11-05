@@ -1,6 +1,6 @@
 package org.example.pngbackend.domain;
 
-public class ParticipantDomain {
+public class  ParticipantDomain {
 
     private final Long id;
     private final String name;

@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.1.1'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
+    id 'org.sonarqube' version '7.5.0.8588'
 }
 
 group = 'org.example'
@@ -37,4 +39,24 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+sonar {
+    properties {
+        property 'sonar.projectKey', 'png-backend'
+        property 'sonar.projectName', 'PNG Backend'
+        property 'sonar.host.url', 'http://localhost:9000'
+        property "sonar.branch.name" , "main"
+        property "sonar.host.url", 
+    }
 }
