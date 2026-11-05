@@ -53,7 +53,7 @@ jacocoTestReport {
 
 sonar {
     properties {
-        property "sonar.organisation" , "dutchmvp26"
+        property "sonar.organization" , "dutchmvp26"
         property 'sonar.projectKey', 'png-backend'
         property 'sonar.projectName', 'PNG Backend'
         property "sonar.branch.name" , "main"
