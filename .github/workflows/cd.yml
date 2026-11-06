@@ -1,0 +1,41 @@
+name: Backend CD
+
+on:
+  workflow_run:
+    workflows: ["Java CI"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push')
+    runs-on: self-hosted
+    environment: production
+    concurrency:
+      group: deploy-backend
+      cancel-in-progress: false
+
+    steps:
+      - name: Check out the commit that CI tested
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Create .env
+        run: |
+          echo "POSTGRES_DB=png" > .env
+          echo "POSTGRES_USER=png_user" >> .env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+
+      - name: Make sure the Docker network exists
+        run: docker network create png-network || true
+
+      - name: Build and start containers
+        run: docker compose up -d --build
+
+      - name: Remove old images
+        run: docker image prune -f
