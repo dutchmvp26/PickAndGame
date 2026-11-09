@@ -6,6 +6,7 @@ import org.example.pngbackend.repository.JpaRoomRepository;
 import org.example.pngbackend.repository.RoomRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,6 +33,14 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Override
     public boolean existsByRoomCode(String roomCode) {
         return jpa.existsByRoomCode(roomCode);
+    }
+
+    @Override
+    public List<RoomDomain> getAllRooms() {
+        return jpa.findAll()
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 
     @Override

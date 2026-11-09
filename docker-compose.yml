@@ -16,10 +16,10 @@ services:
       - png-postgres-data:/var/lib/postgresql/data
 
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d png" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+     test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+     interval: 5s
+     timeout: 5s
+     retries: 5
 
 
   backend:
@@ -32,7 +32,8 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
-      - database
+     database:
+       condition: service_healthy
 
 volumes:
   png-postgres-data:

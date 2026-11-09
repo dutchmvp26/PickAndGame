@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 @Service
 public class RoomService {
@@ -67,6 +68,10 @@ public class RoomService {
                 .orElseThrow(this::roomNotFound);
     }
 
+    public List<RoomDomain> getAllRooms() {
+        return roomRepository.getAllRooms();
+    }
+
     @Transactional
     public ParticipantDomain joinRoom(String roomCode, String name) {
         RoomDomain room = roomRepository.findByRoomCodeForUpdate(normalize(roomCode))
@@ -94,7 +99,7 @@ public class RoomService {
     }
 
     private ResponseStatusException roomNotFound() {
-        return new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found.");
+        return new ResponseStatusException(HttpStatus.NOT_FOUND, "Room(s) not found.");
     }
 
     private String normalize(String roomCode) {

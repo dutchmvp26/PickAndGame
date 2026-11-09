@@ -7,6 +7,7 @@ import org.example.pngbackend.dto.JoinRoomRequest;
 import org.example.pngbackend.service.RoomService;
 
 import jakarta.validation.Valid;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,12 @@ public class RoomController {
         );
 
         return ResponseEntity.ok(room);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RoomDomain>> getAllRooms() {
+        List<RoomDomain> rooms = roomService.getAllRooms();
+        return ResponseEntity.ok(rooms);
     }
 
     @GetMapping("/{roomCode}")
