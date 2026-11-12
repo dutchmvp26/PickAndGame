@@ -1,4 +1,17 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:8080/api/rooms
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Friday game night\",\r
+
+    \  \"activityType\": \"VIDEO_GAMES\",\r
+
+    \  \"icon\": \"CONTROLLER\",\r
+
+    \  \"numberOfPlayers\": 2\r
+
+    }"
 order: 7000

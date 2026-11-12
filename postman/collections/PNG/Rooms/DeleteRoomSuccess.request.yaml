@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:8080/api/rooms/5PIEJT
+method: DELETE
+order: 8000
