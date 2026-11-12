@@ -3,5 +3,15 @@ url: http://localhost:8080/api/rooms
 method: POST
 body:
   type: json
-  content: "{\r\n  \"name\": \"Friday game night\",\r\n  \"description\": \"FIFA and Mario Kart\",\r\n  \"activityType\": \"VIDEO_GAMES\",\r\n  \"icon\": \"CONTROLLER\",\r\n  \"numberOfPlayers\": 3\r\n}"
+  content: "{\r
+
+    \  \"name\": \"Friday game night\",\r
+
+    \  \"activityType\": \"VIDEO_GAMES\",\r
+
+    \  \"icon\": \"CONTROLLER\",\r
+
+    \  \"numberOfPlayers\": 8\r
+
+    }"
 order: 6000

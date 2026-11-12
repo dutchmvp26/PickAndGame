@@ -66,9 +66,10 @@
 
         public void deleteRoom(String roomCode) {
 
-            Optional<RoomDomain> room = roomRepository.findByRoomCode(roomCode);
+            RoomDomain room = roomRepository.findByRoomCode(normalize(roomCode))
+                    .orElseThrow(this::roomNotFound);
 
-            roomRepository.delete(room.get().getId());
+            roomRepository.delete(room.getId());
         }
 
         public RoomDomain getRoom(String roomCode) {
