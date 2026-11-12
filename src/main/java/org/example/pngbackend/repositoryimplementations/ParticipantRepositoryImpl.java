@@ -54,4 +54,9 @@ public class ParticipantRepositoryImpl implements ParticipantRepository {
     public long countByRoomId(Long roomId) {
         return jpa.countByRoom_Id(roomId);
     }
+
+    @Override
+    public void deleteByRoomId(Long roomId) {
+        jpa.deleteByRoom_Id(roomId);
+    }
 }

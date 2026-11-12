@@ -14,4 +14,6 @@ public interface ParticipantRepository {
     List<ParticipantDomain> findByRoomId(Long roomId);
 
     long countByRoomId(Long roomId);
+
+    void deleteByRoomId(Long id);
 }

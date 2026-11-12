@@ -39,7 +39,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/{roomCode}")
-    public ResponseEntity<RoomDomain> roomDelete(@PathVariable String roomCode) {
+    public ResponseEntity<Void> roomDelete(@PathVariable String roomCode) {
         roomService.deleteRoom(roomCode);
 
         return ResponseEntity.noContent().build();

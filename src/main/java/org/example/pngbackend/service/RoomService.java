@@ -69,6 +69,8 @@
             RoomDomain room = roomRepository.findByRoomCode(normalize(roomCode))
                     .orElseThrow(this::roomNotFound);
 
+            participantRepository.deleteByRoomId(room.getId());
+            
             roomRepository.delete(room.getId());
         }
 
