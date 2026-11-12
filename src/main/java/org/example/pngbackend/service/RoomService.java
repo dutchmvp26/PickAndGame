@@ -64,13 +64,14 @@
             return roomRepository.save(room);
         }
 
+        @Transactional
         public void deleteRoom(String roomCode) {
 
             RoomDomain room = roomRepository.findByRoomCode(normalize(roomCode))
                     .orElseThrow(this::roomNotFound);
 
             participantRepository.deleteByRoomId(room.getId());
-            
+
             roomRepository.delete(room.getId());
         }
 
