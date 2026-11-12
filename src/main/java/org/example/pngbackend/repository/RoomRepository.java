@@ -11,4 +11,6 @@ public interface RoomRepository {
     boolean existsByRoomCode(String roomCode);
     Optional<RoomDomain> findByRoomCodeForUpdate(String roomCode);
     List<RoomDomain> getAllRooms();
+    void delete (Long id);
+    Optional<RoomDomain> findById(Long id);
 }

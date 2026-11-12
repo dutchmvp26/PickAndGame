@@ -31,9 +31,6 @@ jobs:
           echo "POSTGRES_USER=png_user" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
 
-      - name: Make sure the Docker network exists
-        run: docker network create png-network || true
-
       - name: Build and start containers
         run: docker compose up -d --build
 

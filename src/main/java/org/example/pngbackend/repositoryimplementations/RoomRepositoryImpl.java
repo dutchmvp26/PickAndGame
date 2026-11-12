@@ -48,4 +48,15 @@ public class RoomRepositoryImpl implements RoomRepository {
         return jpa.findByRoomCodeForUpdate(roomCode)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Optional<RoomDomain> findById(Long id){
+        return jpa.findById(id)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public void delete (Long id) {
+        jpa.deleteById(id);
+    }
 }

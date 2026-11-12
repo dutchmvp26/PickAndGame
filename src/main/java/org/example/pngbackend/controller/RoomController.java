@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
@@ -35,6 +36,13 @@ public class RoomController {
         );
 
         return ResponseEntity.ok(room);
+    }
+
+    @DeleteMapping("/{roomCode}")
+    public ResponseEntity<RoomDomain> roomDelete(@PathVariable String roomCode) {
+        roomService.deleteRoom(roomCode);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
