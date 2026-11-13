@@ -31,7 +31,7 @@ class RoomMapperTests {
 
         Room entity = mapper.toEntity(domain);
 
-        assertNull(entity.getId()); // the database assigns the id
+        assertEquals(1L, entity.getId());   // was: assertNull(entity.getId());
         assertEquals("ABC123", entity.getRoomCode());
         assertEquals("Game night", entity.getName());
         assertEquals("Bring snacks", entity.getDescription());

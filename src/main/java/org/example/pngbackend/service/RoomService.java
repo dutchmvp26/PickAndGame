@@ -110,6 +110,47 @@
             return participantRepository.save(participant);
         }
 
+        @Transactional
+        public RoomDomain updateRoom(
+                String roomCode,
+                String name,
+                String description,
+                ActivityType activityType,
+                RoomIcon icon,
+                int numberOfPlayers
+        ) {
+            if (numberOfPlayers < 2) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "A room must have at least 2 players."
+                );
+            }
+
+            RoomDomain room = roomRepository.findByRoomCodeForUpdate(normalize(roomCode))
+                    .orElseThrow(this::roomNotFound);
+
+            if (room.getStatus() != RoomStatus.WAITING) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT,
+                        "Only a waiting room can be edited."
+                );
+            }
+
+            long participantCount = participantRepository.countByRoomId(room.getId());
+
+            if (numberOfPlayers < participantCount) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT,
+                        "Max players can't be lower than the " + participantCount
+                                + " players already in the room."
+                );
+            }
+
+            room.update(name, description, activityType, icon, numberOfPlayers);
+
+            return roomRepository.save(room);
+        }
+
         private ResponseStatusException roomNotFound() {
             return new ResponseStatusException(HttpStatus.NOT_FOUND, "Room(s) not found.");
         }

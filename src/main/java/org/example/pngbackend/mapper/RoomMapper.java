@@ -16,6 +16,7 @@ public class RoomMapper {
     public Room toEntity(RoomDomain domain) {
         Room entity = new Room();
 
+        entity.setId(domain.getId());
         entity.setRoomCode(domain.getRoomCode());
         entity.setName(domain.getName());
         entity.setDescription(domain.getDescription());

@@ -1,0 +1,19 @@
+$kind: http-request
+url: /api/rooms/PITAY0
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Friday game night (new name)\",\r
+
+    \  \"description\": \"Now with pizza\",\r
+
+    \  \"activityType\": \"BOARD_GAMES\",\r
+
+    \  \"icon\": \"DICE\",\r
+
+    \  \"numberOfPlayers\": 6\r
+
+    }"
+order: 10000

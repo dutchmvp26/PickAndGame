@@ -6,11 +6,11 @@ public class RoomDomain {
 
     private final Long id;
     private final String roomCode;
-    private final String name;
-    private final String description;
-    private final ActivityType activityType;
-    private final RoomIcon icon;
-    private final int numberOfPlayers;
+    private String name;
+    private String description;
+    private ActivityType activityType;
+    private RoomIcon icon;
+    private int numberOfPlayers;
     private RoomStatus status;
     private final LocalDateTime createdAt;
 
@@ -25,37 +25,10 @@ public class RoomDomain {
             RoomStatus status,
             LocalDateTime createdAt
     ) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(
-                    "A room must have a name."
-            );
-        }
-
-        if (activityType == null) {
-            throw new IllegalArgumentException(
-                    "A room must have an activity type."
-            );
-        }
-
-        if (icon == null) {
-            throw new IllegalArgumentException(
-                    "A room must have an icon."
-            );
-        }
-
-        if (numberOfPlayers < 2) {
-            throw new IllegalArgumentException(
-                    "A room must have at least 2 players."
-            );
-        }
+        applyDetails(name, description, activityType, icon, numberOfPlayers);
 
         this.id = id;
         this.roomCode = roomCode;
-        this.name = name.trim();
-        this.description = description == null ? "" : description.trim();
-        this.activityType = activityType;
-        this.icon = icon;
-        this.numberOfPlayers = numberOfPlayers;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -81,6 +54,16 @@ public class RoomDomain {
         );
     }
 
+    public void update(
+            String name,
+            String description,
+            ActivityType activityType,
+            RoomIcon icon,
+            int numberOfPlayers
+    ) {
+        applyDetails(name, description, activityType, icon, numberOfPlayers);
+    }
+
     public void startVoting() {
         if (status != RoomStatus.WAITING) {
             throw new IllegalStateException(
@@ -103,6 +86,46 @@ public class RoomDomain {
 
     public boolean isFull(int participantCount) {
         return participantCount >= numberOfPlayers;
+    }
+
+    // Validates and sets the editable details. Used by the constructor AND update(),
+    // so the rules live in exactly one place.
+    private void applyDetails(
+            String name,
+            String description,
+            ActivityType activityType,
+            RoomIcon icon,
+            int numberOfPlayers
+    ) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(
+                    "A room must have a name."
+            );
+        }
+
+        if (activityType == null) {
+            throw new IllegalArgumentException(
+                    "A room must have an activity type."
+            );
+        }
+
+        if (icon == null) {
+            throw new IllegalArgumentException(
+                    "A room must have an icon."
+            );
+        }
+
+        if (numberOfPlayers < 2) {
+            throw new IllegalArgumentException(
+                    "A room must have at least 2 players."
+            );
+        }
+
+        this.name = name.trim();
+        this.description = description == null ? "" : description.trim();
+        this.activityType = activityType;
+        this.icon = icon;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public Long getId() {

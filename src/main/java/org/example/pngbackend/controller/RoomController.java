@@ -4,6 +4,7 @@ import org.example.pngbackend.domain.ParticipantDomain;
 import org.example.pngbackend.domain.RoomDomain;
 import org.example.pngbackend.dto.CreateRoomRequest;
 import org.example.pngbackend.dto.JoinRoomRequest;
+import org.example.pngbackend.dto.UpdateRoomRequest;
 import org.example.pngbackend.service.RoomService;
 
 import jakarta.validation.Valid;
@@ -56,6 +57,23 @@ public class RoomController {
             @PathVariable String roomCode
     ) {
         RoomDomain room = roomService.getRoom(roomCode);
+
+        return ResponseEntity.ok(room);
+    }
+
+    @PutMapping("/{roomCode}")
+    public ResponseEntity<RoomDomain> updateRoom(
+            @PathVariable String roomCode,
+            @Valid @RequestBody UpdateRoomRequest request
+    ) {
+        RoomDomain room = roomService.updateRoom(
+                roomCode,
+                request.getName(),
+                request.getDescription(),
+                request.getActivityType(),
+                request.getIcon(),
+                request.getNumberOfPlayers()
+        );
 
         return ResponseEntity.ok(room);
     }
