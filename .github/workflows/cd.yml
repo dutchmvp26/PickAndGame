@@ -15,6 +15,9 @@ jobs:
        github.event.workflow_run.event == 'push')
     runs-on: self-hosted
     environment: production
+    permissions:
+      contents: read
+      actions: read
     concurrency:
       group: deploy-backend
       cancel-in-progress: false
@@ -25,11 +28,23 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
+      - name: Download the jar built by CI
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v5
+        with:
+          name: backend-jar
+          path: .
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create .env
         run: |
           echo "POSTGRES_DB=png" > .env
           echo "POSTGRES_USER=png_user" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            echo "BACKEND_DOCKERFILE=Dockerfile.prebuilt" >> .env
+          fi
 
       - name: Build and start containers
         run: docker compose up -d --build
