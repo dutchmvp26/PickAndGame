@@ -43,7 +43,7 @@ jobs:
           echo "POSTGRES_USER=png_user" >> .env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
-            echo "BACKEND_DOCKERFILE=Dockerfile.prebuilt" >> .env
+            echo "BACKEND_DOCKERFILE=Dockerfile" >> .env
           fi
 
       - name: Build and start containers
