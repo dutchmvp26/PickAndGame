@@ -40,4 +40,4 @@ volumes:
 
 networks:
   png-network:
-    driver: bridge
+    external: true
