@@ -7,14 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  build-test-analyze:
+  # 1. Compile once and create the jar that CD will deploy
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
       - name: Set up Java
         uses: actions/setup-java@v5
@@ -26,8 +25,8 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x gradlew
 
-      - name: Build, test and create coverage report
-        run: ./gradlew clean build jacocoTestReport
+      - name: Build application
+        run: ./gradlew bootJar
 
       - name: Pick the runnable jar
         run: cp "$(ls build/libs/*.jar | grep -v plain | head -n 1)" app.jar
@@ -40,7 +39,76 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: SonarQube analysis
+  # 2. Run the unit tests and create the coverage report
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Run unit tests
+        run: ./gradlew clean test jacocoTestReport
+
+      - name: Upload SonarQube artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-artifacts
+          path: |
+            build/classes/
+            build/reports/jacoco/test/jacocoTestReport.xml
+          if-no-files-found: error
+          retention-days: 3
+
+  # 3. Send code + coverage to SonarQube (only on main)
+  sonarqube:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Sonar needs the full history
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      # Files created by the test job
+      - name: Download SonarQube artifacts
+        uses: actions/download-artifact@v5
+        with:
+          name: sonar-artifacts
+          path: build/
+
+      # No "clean" and "-x test": keep the downloaded files, don't rerun tests
+      - name: Run SonarQube analysis
         run: ./gradlew sonar -x test
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
