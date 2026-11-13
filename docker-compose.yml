@@ -39,6 +39,5 @@ volumes:
   png-postgres-data:
 
 networks:
-    default:
-      name: png-network
-      external: true
+  png-network:
+    driver: bridge
