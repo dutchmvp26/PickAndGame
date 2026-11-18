@@ -21,9 +21,6 @@ services:
      timeout: 5s
      retries: 5
 
-    networks:
-       - png-network
-
 
   backend:
     build:
@@ -39,8 +36,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    networks:
-      - png-network
 
 volumes:
   png-postgres-data:

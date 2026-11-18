@@ -88,7 +88,8 @@ public class RoomDomain {
         return participantCount >= numberOfPlayers;
     }
 
-
+    // Validates and sets the editable details. Used by the constructor AND update(),
+    // so the rules live in exactly one place.
     private void applyDetails(
             String name,
             String description,
