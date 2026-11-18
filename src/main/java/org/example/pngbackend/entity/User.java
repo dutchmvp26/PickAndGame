@@ -23,5 +23,5 @@ import java.time.LocalDateTime;
 
         public User() {}
 
-        // getters and setters for all four fields (same style as Room)
+       
     }
